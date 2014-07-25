@@ -11,20 +11,28 @@ public class LoggingAspect {
 	//@Before("execution(public * get*())") for all public getters
 	//@Before("execution(public * get*(..))") for all public getters, any return type, any number of arguments 
 	//@Before("execution(public * springaop.model.*.get*())") all public getters from classes in package
+	//combining pointcuts && ||
 	
-	@Before("allGetters()")
+	@Before("allGetters() && allCircleMethods()")
 	public void LoggingAdvice(){
 		System.out.println("Advice run. Get Method called");
 	}
 	
 	@Before("allGetters()")
 	public void secondAdvice(){
-		System.out.println("Second Advice executed");
+		System.out.println("A Get method called");
 	}
 	
 	@Pointcut("execution(* get*())")
-	public void allGetters(){
-		
-	}
+	public void allGetters(){}
+	
+	//@Pointcut("within(springaop.model.*)") all methods within package
+	//@Pointcut("within(springaop.model..*)") all methods within package with subpackages
+	
+	@Pointcut("within(springaop.model.Circle)")
+	public void allCircleMethods(){}
+	
+	//@Pointcut(args(springasop.model.Circle)) arguments that methods have (here: Circle)
+	// 
 	
 }
