@@ -1,6 +1,9 @@
 package springaop.aspect;
 
 import org.aspectj.lang.JoinPoint;
+import org.aspectj.lang.annotation.After;
+import org.aspectj.lang.annotation.AfterReturning;
+import org.aspectj.lang.annotation.AfterThrowing;
 import org.aspectj.lang.annotation.Aspect;
 import org.aspectj.lang.annotation.Before;
 import org.aspectj.lang.annotation.Pointcut;
@@ -23,14 +26,21 @@ public class LoggingAspect {
 		//Circle circle= (Circle) joinPoint.getTarget();
 	}
 	
-	@Before("stringArguments()")
+	/*@Before("stringArguments()")
 	public void stringMethod(){
 		System.out.println("A String-argument method has been called");
+	}*/
+	
+	//after scuccessfully returning (w/o exceptions)
+	
+	@AfterReturning(pointcut="args(name)", returning="returnString")
+	public void stringArgumetnsMethods(String name, String returnString){
+		System.out.println("A String-argument method has been called. The value is " +name+". Output: "+returnString);
 	}
 	
-	@Before("args(name)")
-	public void stringArgumetnsMethods(String name){
-		System.out.println(name);
+	@AfterThrowing(pointcut="args(name)", throwing="ex")
+	public void exceptionAdvice(String name, Exception ex){
+		System.out.println("An exception has been thrown "+ex);
 	}
 	
 	

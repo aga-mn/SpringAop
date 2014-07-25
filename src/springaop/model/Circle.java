@@ -10,5 +10,12 @@ public class Circle {
 
 	public void setName(String name) {
 		this.name = name;
+		System.out.println("Cricle setter");
+		throw(new RuntimeException()); //testing @AfterReturn
+	}
+	
+	public String setNameAndReturn(String name) {
+		this.name=name;
+		return name;
 	}
 }
