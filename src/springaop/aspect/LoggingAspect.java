@@ -1,9 +1,11 @@
 package springaop.aspect;
 
 import org.aspectj.lang.JoinPoint;
+import org.aspectj.lang.ProceedingJoinPoint;
 import org.aspectj.lang.annotation.After;
 import org.aspectj.lang.annotation.AfterReturning;
 import org.aspectj.lang.annotation.AfterThrowing;
+import org.aspectj.lang.annotation.Around;
 import org.aspectj.lang.annotation.Aspect;
 import org.aspectj.lang.annotation.Before;
 import org.aspectj.lang.annotation.Pointcut;
@@ -43,9 +45,26 @@ public class LoggingAspect {
 		System.out.println("An exception has been thrown "+ex);
 	}
 	
+	@Around("allSetters()")
+	public Object myAroundAdvice(ProceedingJoinPoint proceedingJoinPoint){
+		
+		Object returnValue=null;
+		
+		try {
+			System.out.println("Before advice");
+			returnValue=proceedingJoinPoint.proceed();
+			System.out.println("After returning");
+			
+		} catch (Throwable e) {
+			System.out.println("After throwing");
+		}
+		
+		System.out.println("After finally");
+		return returnValue;
+	}
 	
-	@Pointcut("execution(* get*())")
-	public void allGetters(){}
+	@Pointcut("execution(* set*(..))")
+	public void allSetters(){}
 	
 	//@Pointcut("within(springaop.model.*)") all methods within package
 	//@Pointcut("within(springaop.model..*)") all methods within package with subpackages
