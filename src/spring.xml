@@ -21,4 +21,14 @@
 
 <bean name="loggingAspect" class="springaop.aspect.LoggingAspect" />
 
+<aop:config>
+	<aop:aspect id="loggingAspect" ref="loggingAspect"> 
+		<!-- <aop:pointcut id="allGetters" expression="execution (* get*())"/>
+		<aop:around pointcut-ref="allGetters" method="myAroundAdvice"/> -->
+		
+		<aop:around method="myAroundAdvice" pointcut="execution (* get*())"/>
+		
+	</aop:aspect>
+</aop:config>
+
 </beans>
