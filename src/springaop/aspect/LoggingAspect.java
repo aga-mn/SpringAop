@@ -45,7 +45,8 @@ public class LoggingAspect {
 		System.out.println("An exception has been thrown "+ex);
 	}
 	
-	@Around("allSetters()")
+	//@Around("allSetters()")
+	@Around("@annotation(springaop.aspect.Loggable)")
 	public Object myAroundAdvice(ProceedingJoinPoint proceedingJoinPoint){
 		
 		Object returnValue=null;
@@ -76,4 +77,6 @@ public class LoggingAspect {
 	
 	@Pointcut("args(String)")
 	public void stringArguments(){}
+	
+	
 }
